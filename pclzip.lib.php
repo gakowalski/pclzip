@@ -5254,8 +5254,9 @@ function PclZipUtilOptionText($p_option)
 // --------------------------------------------------------------------------------
 function PclZipUtilTranslateWinPath($p_path, $p_remove_disk_letter = true)
 {
-	$os = function_exists('php_uname') ? php_uname() : PHP_OS;
-    if (stristr($os, 'windows')) {
+	if (function_exists('php_uname') && stristr(php_uname(), 'windows') !== false
+			|| isset($_SERVER['OS']) && stristr($_SERVER['OS'], 'Windows') !== false
+			|| defined(PHP_OS) && strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
         // ----- Look for potential disk letter
         if (($p_remove_disk_letter) && (($v_position = strpos($p_path, ':')) != false)) {
             $p_path = substr($p_path, $v_position + 1);
